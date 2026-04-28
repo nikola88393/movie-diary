@@ -14,6 +14,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MovieTypeIdRouteImport } from './routes/movie/$type.$id'
+import { Route as CategoryTypeCategoryIdRouteImport } from './routes/category/$type.$categoryId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ProtectedProfileSettingsRouteImport } from './routes/_protected/profile/settings'
 import { Route as ProtectedProfileOverviewRouteImport } from './routes/_protected/profile/overview'
@@ -43,6 +45,16 @@ const ProtectedRoute = ProtectedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MovieTypeIdRoute = MovieTypeIdRouteImport.update({
+  id: '/movie/$type/$id',
+  path: '/movie/$type/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryTypeCategoryIdRoute = CategoryTypeCategoryIdRouteImport.update({
+  id: '/category/$type/$categoryId',
+  path: '/category/$type/$categoryId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -91,6 +103,8 @@ export interface FileRoutesByFullPath {
   '/profile/overview': typeof ProtectedProfileOverviewRoute
   '/profile/settings': typeof ProtectedProfileSettingsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/category/$type/$categoryId': typeof CategoryTypeCategoryIdRoute
+  '/movie/$type/$id': typeof MovieTypeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -103,6 +117,8 @@ export interface FileRoutesByTo {
   '/profile/overview': typeof ProtectedProfileOverviewRoute
   '/profile/settings': typeof ProtectedProfileSettingsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/category/$type/$categoryId': typeof CategoryTypeCategoryIdRoute
+  '/movie/$type/$id': typeof MovieTypeIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -117,6 +133,8 @@ export interface FileRoutesById {
   '/_protected/profile/overview': typeof ProtectedProfileOverviewRoute
   '/_protected/profile/settings': typeof ProtectedProfileSettingsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/category/$type/$categoryId': typeof CategoryTypeCategoryIdRoute
+  '/movie/$type/$id': typeof MovieTypeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +149,8 @@ export interface FileRouteTypes {
     | '/profile/overview'
     | '/profile/settings'
     | '/api/auth/$'
+    | '/category/$type/$categoryId'
+    | '/movie/$type/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -143,6 +163,8 @@ export interface FileRouteTypes {
     | '/profile/overview'
     | '/profile/settings'
     | '/api/auth/$'
+    | '/category/$type/$categoryId'
+    | '/movie/$type/$id'
   id:
     | '__root__'
     | '/'
@@ -156,6 +178,8 @@ export interface FileRouteTypes {
     | '/_protected/profile/overview'
     | '/_protected/profile/settings'
     | '/api/auth/$'
+    | '/category/$type/$categoryId'
+    | '/movie/$type/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,6 +189,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignUpRoute: typeof SignUpRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  CategoryTypeCategoryIdRoute: typeof CategoryTypeCategoryIdRoute
+  MovieTypeIdRoute: typeof MovieTypeIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -202,6 +228,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movie/$type/$id': {
+      id: '/movie/$type/$id'
+      path: '/movie/$type/$id'
+      fullPath: '/movie/$type/$id'
+      preLoaderRoute: typeof MovieTypeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$type/$categoryId': {
+      id: '/category/$type/$categoryId'
+      path: '/category/$type/$categoryId'
+      fullPath: '/category/$type/$categoryId'
+      preLoaderRoute: typeof CategoryTypeCategoryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -276,6 +316,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignUpRoute: SignUpRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  CategoryTypeCategoryIdRoute: CategoryTypeCategoryIdRoute,
+  MovieTypeIdRoute: MovieTypeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
